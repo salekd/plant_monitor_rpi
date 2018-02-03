@@ -1,0 +1,26 @@
+from datetime import datetime
+import time
+import json
+import requests
+from configparser import ConfigParser
+import picamera
+import os
+
+
+# Read config file
+config = ConfigParser()
+config.read('raspberrypi.cfg')
+mac = config.get('MiFlora', 'mac')
+url = config.get('Flask', 'url')
+
+# Define a filename with the device id and a timestamp
+filename = "/home/pi/plant_monitor/images/{}_{}.jpg".format(\
+        mac.replace(':', ''), datetime.utcnow().strftime("%Y%m%d%H%M%S"))
+
+# Take photo
+camera = picamera.PiCamera()
+camera.capture(filename)
+
+# Upload to server
+files = {'file': (os.path.basename(filename), open(filename, 'rb'), 'image/jpg')}
+requests.post(url + "/image", files=files)
