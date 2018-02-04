@@ -10,7 +10,6 @@ import os
 # Read config file
 config = ConfigParser()
 config.read('raspberrypi.cfg')
-mac = config.get('MiFlora', 'mac')
 url = config.get('Flask', 'url')
 
 # Define a filename with the device id and a timestamp
