@@ -10,11 +10,11 @@ import json
 import requests
 from configparser import ConfigParser
 import picamera
-import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
+import os
 
 
 # Read config file
@@ -51,7 +51,7 @@ msgRoot.attach(msgText)
 
 photo = open(filename, 'rb')
 msgImg = MIMEImage(photo.read(), 'jpeg')
-msgImg.add_header("Content-Disposition", "attachment", filename=filename)
+msgImg.add_header("Content-Disposition", "attachment", filename=os.path.basename(filename))
 msgRoot.attach(msgImg)
 
 try:
