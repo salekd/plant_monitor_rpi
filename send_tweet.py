@@ -10,7 +10,6 @@ import json
 import requests
 from configparser import ConfigParser
 import picamera
-import os
 from twython import Twython
 
 
