@@ -11,6 +11,10 @@ import requests
 from configparser import ConfigParser
 import picamera
 import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
 
 
 # Read config file
@@ -46,7 +50,7 @@ msgText = MIMEText(message)
 msgRoot.attach(msgText)
 
 photo = open(filename, 'rb')
-msgImg = MIMEImage(photo, 'jpeg')
+msgImg = MIMEImage(photo.read(), 'jpeg')
 msgImg.add_header("Content-Disposition", "attachment", filename=filename)
 msgRoot.attach(msgImg)
 
@@ -55,7 +59,7 @@ try:
     server.ehlo()
     server.starttls()
     server.login(user, pwd)
-    server.sendmail(FROM, TO, msgRoot.as_string())
+    server.sendmail(msgRoot["From"], msgRoot["To"], msgRoot.as_string())
     server.close()
     print("successfully sent the mail")
 except:
