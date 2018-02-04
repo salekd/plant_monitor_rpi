@@ -27,7 +27,7 @@ print(measurement)
 measurement["timestamp"] = str(datetime.utcnow())
 
 # Append to a csv file for the device
-csvfile = "/home/pi/plant_monitor/measurements/{}.csv".format(mac.replace(':', ''))
+csvfile = "/home/pi/plant_monitor_rpi/measurements/{}.csv".format(mac.replace(':', ''))
 with open(csvfile, "a") as f:
     # Make sure the entries are in the correct order
     f.write("{}, {}, {}, {}, {}\n".format(measurement["timestamp"],

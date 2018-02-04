@@ -30,7 +30,7 @@ poller.fill_cache()
 measurement = poller._parse_data()
 
 # Define an image filename with the device id and a timestamp
-filename = "/home/pi/plant_monitor/images/{}_{}.jpg".format(\
+filename = "/home/pi/plant_monitor_rpi/images/{}_{}.jpg".format(\
         mac.replace(':', ''), datetime.utcnow().strftime("%Y%m%d%H%M%S"))
 
 # Take photo
