@@ -12,7 +12,7 @@ config = ConfigParser()
 config.read('raspberrypi.cfg')
 url = config.get('Flask', 'url')
 
-# Define a filename with the device id and a timestamp
+# Define an image filename with the device id and a timestamp
 filename = "/home/pi/plant_monitor/images/{}_{}.jpg".format(\
         mac.replace(':', ''), datetime.utcnow().strftime("%Y%m%d%H%M%S"))
 
