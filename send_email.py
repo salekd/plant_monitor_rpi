@@ -24,7 +24,6 @@ mac = config.get('MiFlora', 'mac')
 user = config.get('Email', 'user')
 pwd = config.get('Email', 'pwd')
 
-
 # Take measurement
 poller = MiFloraPoller(mac, BluepyBackend)
 poller.fill_cache()
