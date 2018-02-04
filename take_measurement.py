@@ -8,7 +8,6 @@ from datetime import datetime
 import time
 import json
 import requests
-from collections import OrderedDict
 from configparser import ConfigParser
 
 
@@ -26,16 +25,15 @@ measurement = poller._parse_data()
 # Add timestamp
 measurement["timestamp"] = str(datetime.utcnow())
 
-# Make sure the entries are in the correct order
-keys = ['timestamp', 'moisture', 'temperature', 'conductivity', 'light']
-ordered = OrderedDict([(key, measurement[key]) for key in keys])
-
-print(json.dumps(ordered))
-
 # Append to a csv file for the device
 csvfile = "/home/pi/plant_monitor/measurements/{}.csv".format(mac.replace(':', ''))
 with open(csvfile, "a") as f:
-    f.write(", ".join([str(x) for x in ordered.values()]) + '\n')
+    # Make sure the entries are in the correct order
+    f.write(measurement["timestamp"] + ", " +
+            measurement["moisture"] + ", " +
+            measurement["temperature"] + ", " +
+            measurement["conductivity"] + ", " +
+            measurement["light"] + "\n")
 
 # Add device id
 measurement["device"] = mac
