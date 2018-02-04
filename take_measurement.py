@@ -21,6 +21,7 @@ url = config.get('Flask', 'url')
 poller = MiFloraPoller(mac, BluepyBackend)
 poller.fill_cache()
 measurement = poller._parse_data()
+print(measurement)
 
 # Add timestamp
 measurement["timestamp"] = str(datetime.utcnow())
@@ -29,11 +30,8 @@ measurement["timestamp"] = str(datetime.utcnow())
 csvfile = "/home/pi/plant_monitor/measurements/{}.csv".format(mac.replace(':', ''))
 with open(csvfile, "a") as f:
     # Make sure the entries are in the correct order
-    f.write(measurement["timestamp"] + ", " +
-            measurement["moisture"] + ", " +
-            measurement["temperature"] + ", " +
-            measurement["conductivity"] + ", " +
-            measurement["light"] + "\n")
+    f.write("{}, {}, {}, {}, {}\n".format(measurement["timestamp"],
+        measurement["moisture"], measurement["temperature"], measurement["conductivity"], measurement["light"]))
 
 # Add device id
 measurement["device"] = mac
