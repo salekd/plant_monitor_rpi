@@ -1,7 +1,3 @@
-# Make sure python can see the miflora module
-import sys
-sys.path.append("/home/pi/miflora")
-
 from miflora.miflora_poller import MiFloraPoller
 from miflora.backends.bluepy import BluepyBackend
 from datetime import datetime
