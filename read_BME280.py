@@ -1,3 +1,4 @@
+import smbus2
 import bme280
 from datetime import datetime
 import json
@@ -12,17 +13,23 @@ uid = config.get('RaspberryPi', 'uid')
 url = config.get('Flask', 'url')
 
 # Take measurement
-temperature, pressure, humidity = bme280.readBME280All()
+port = 1
+address = 0x76
+bus = smbus2.SMBus(port)
+bme280.load_calibration_params(bus, address)
+data = bme280.sample(bus, address)
+print(data)
+
 measurement = {}
-measurement["temperature"] = temperature
-measurement["pressure"] = round(pressure, 2)
-measurement["humidity"] = round(humidity, 2)
+measurement["temperature"] = data.temperature
+measurement["pressure"] = round(data.pressure, 2)
+measurement["humidity"] = round(data.humidity, 2)
 print(measurement)
 
 # Add timestamp
 measurement["timestamp"] = str(datetime.utcnow())
 
-#Add device id
+# Add device id
 measurement["device"] = "BME280_{}".format(uid)
 
 # Append to a csv file for the device
