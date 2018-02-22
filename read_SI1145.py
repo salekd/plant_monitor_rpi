@@ -1,4 +1,4 @@
-from SI1145 import SI1145
+from SI1145.SI1145 import SI1145
 from datetime import datetime
 import time
 import json
