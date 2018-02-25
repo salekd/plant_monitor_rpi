@@ -21,7 +21,7 @@ data = bme280.sample(bus, address)
 print(data)
 
 measurement = {}
-measurement["temperature"] = data.temperature
+measurement["temperature"] = round(data.temperature, 2)
 measurement["pressure"] = round(data.pressure, 2)
 measurement["humidity"] = round(data.humidity, 2)
 print(measurement)
