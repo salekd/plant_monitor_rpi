@@ -30,10 +30,10 @@ print(measurement)
 measurement["timestamp"] = str(datetime.utcnow())
 
 # Add device id
-measurement["device"] = "BME280_{}".format(uid)
+measurement["device"] = uid
 
 # Append to a csv file for the device
-csvfile = "/home/pi/plant_monitor_rpi/measurements/{}.csv".format(measurement["device"])
+csvfile = "/home/pi/plant_monitor_rpi/measurements/BME280_{}.csv".format(measurement["device"])
 with open(csvfile, "a") as f:
     # Make sure the entries are in the correct order
     f.write("{}, {}, {}, {}\n".format(measurement["timestamp"],
