@@ -20,6 +20,7 @@ measurement = poller._parse_data()
 print(measurement)
 
 if measurement['moisture'] < moisture_threshold:
+    print("Pumping water for {} s.".format(pump_time))
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(pump_gpio, GPIO.OUT, initial=GPIO.HIGH)
     sleep(pump_time)
