@@ -30,6 +30,7 @@ mac = config.get('MiFlora', 'mac')
 moisture_threshold = config.getint('Pump', 'moisture_threshold')
 pump_time = config.getint('Pump', 'pump_time')
 pump_gpio = config.getint('Pump', 'pump_gpio')
+logger.info("Moisture threshold = {}".format(moisture_threshold))
 
 # Take measurement
 poller = MiFloraPoller(mac, BluepyBackend)
