@@ -10,7 +10,6 @@ import time
 import json
 import requests
 
-
 # Create logger
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
