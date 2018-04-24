@@ -10,6 +10,7 @@ import time
 import json
 import requests
 
+
 # Create logger
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -24,7 +25,6 @@ handler.setFormatter(formatter)
 
 # Add the handler to the logger
 logger.addHandler(handler)
-
 
 # Read config file
 config = ConfigParser()
