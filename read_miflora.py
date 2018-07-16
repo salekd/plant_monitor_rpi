@@ -5,6 +5,7 @@ import time
 import json
 import requests
 from configparser import ConfigParser
+import paho.mqtt.publish as publish
 
 
 # Read config file
@@ -12,6 +13,8 @@ config = ConfigParser()
 config.read('raspberrypi.cfg')
 mac = config.get('MiFlora', 'mac')
 url = config.get('Flask', 'url')
+hostname = config.get('MQTT', 'hostname')
+topic = config.get('MQTT', 'topic')
 
 # Take measurement
 poller = MiFloraPoller(mac, BluepyBackend)
@@ -35,3 +38,6 @@ measurement["device"] = mac
 # Upload to server
 headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
 requests.post(url + "/measurement", data=json.dumps(measurement), headers=headers)
+
+# Send to test.mosquitto.org
+publish.single(topic, payload=json.dumps(measurement), hostname=hostname)
