@@ -26,10 +26,10 @@ handler.setFormatter(formatter)
 # Add the handler to the logger
 logger.addHandler(handler)
 
-
 # Read config file
 config = ConfigParser()
 config.read('raspberrypi.cfg')
+uid = config.get('RaspberryPi', 'uid')
 mac = config.get('MiFlora', 'mac')
 url = config.get('Flask', 'url')
 moisture_threshold = config.getint('Pump', 'moisture_threshold')
@@ -55,11 +55,11 @@ if measurement['moisture'] < moisture_threshold:
 
     pump_log = {}
     pump_log["timestamp"] = str(datetime.utcnow())
-    pump_log["device"] = mac
+    pump_log["device"] = uid
     pump_log["duration"] = pump_time
 
     # Append to a csv file for the device
-    csvfile = "/home/pi/plant_monitor_rpi/measurements/pump_{}.csv".format(mac.replace(':', ''))
+    csvfile = "/home/pi/plant_monitor_rpi/measurements/pump_{}.csv".format(uid))
     with open(csvfile, "a") as f:
         # Make sure the entries are in the correct order
         f.write("{}, {}\n".format(pump_log["timestamp"], pump_log["duration"]))
