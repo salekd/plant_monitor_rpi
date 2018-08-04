@@ -59,7 +59,7 @@ if measurement['moisture'] < moisture_threshold:
     pump_log["duration"] = pump_time
 
     # Append to a csv file for the device
-    csvfile = "/home/pi/plant_monitor_rpi/measurements/pump_{}.csv".format(uid))
+    csvfile = "/home/pi/plant_monitor_rpi/measurements/pump_{}.csv".format(uid)
     with open(csvfile, "a") as f:
         # Make sure the entries are in the correct order
         f.write("{}, {}\n".format(pump_log["timestamp"], pump_log["duration"]))
