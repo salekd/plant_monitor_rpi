@@ -6,6 +6,8 @@ import json
 import requests
 from configparser import ConfigParser
 import paho.mqtt.publish as publish
+import pathlib
+import ssl
 
 
 # Read config file
@@ -36,8 +38,15 @@ with open(csvfile, "a") as f:
 measurement["device"] = mac
 
 # Upload to server
-headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
-requests.post(url + "/measurement", data=json.dumps(measurement), headers=headers)
+#headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
+#requests.post(url + "/measurement", data=json.dumps(measurement), headers=headers)
 
 # Send to test.mosquitto.org
-publish.single(topic, payload=json.dumps(measurement), hostname=hostname)
+#publish.single(topic, payload=json.dumps(measurement), hostname=hostname)
+#publish.single(topic, payload=json.dumps(measurement), hostname="145.100.41.54", port=50103)
+#publish.single(topic, payload=json.dumps(measurement), hostname="mosquitto.projects.sda.surfsara.nl", port=50103)
+#publish.single(topic, payload=json.dumps(measurement), hostname="mosquitto.projects.sda.surfsara.nl", port=50103)
+auth = {"username": "pub_client", "password": "igloo-mardi-ira-aye"}
+parent_dir = pathlib.Path(__file__).parent.resolve()
+tls = {"ca_certs": str(parent_dir / ".." / "ca.crt"), "tls_version": ssl.PROTOCOL_TLSv1_2}
+publish.single(topic, payload=json.dumps(measurement), hostname="mosquitto.projects.sda.surfsara.nl", port=50103, auth=auth, tls=tls)
