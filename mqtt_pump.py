@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
-import json
-import requests
+import ssl
 import logging
+import pathlib
 from time import sleep
 import RPi.GPIO as GPIO
 
@@ -22,7 +22,7 @@ def on_disconnect(mqttc, obj, rc):
 def on_message(mqttc, obj, msg):
     logger.info("Received message '" + str(msg.payload) + "' on topic '" + msg.topic + "' with QoS " + str(msg.qos))
     pump_gpio = 18
-    pump_time = 10
+    pump_time = int(msg.payload)
     logger.info("Pumping water for {} s.".format(pump_time))
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(pump_gpio, GPIO.OUT, initial=GPIO.HIGH)
@@ -56,7 +56,8 @@ mqttc.on_subscribe = on_subscribe
 # Uncomment to enable debug messages
 # mqttc.on_log = on_log
 mqttc.username_pw_set("sub_client", "ion-adept-hoc-hood")
-mqttc.tls_set("ca.crt", tls_version=ssl.PROTOCOL_TLSv1_2)
+parent_dir = pathlib.Path(__file__).parent.resolve()
+mqttc.tls_set(str(parent_dir/ ".." / "ca.crt"), tls_version=ssl.PROTOCOL_TLSv1_2)
 mqttc.connect("mosquitto.projects.sda.surfsara.nl", 50103, 60)
 
 mqttc.loop_forever()
