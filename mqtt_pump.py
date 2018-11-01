@@ -56,7 +56,7 @@ mqttc.on_subscribe = on_subscribe
 # Uncomment to enable debug messages
 # mqttc.on_log = on_log
 mqttc.username_pw_set("sub_client", "ion-adept-hoc-hood")
-mqttc.tls_set("ca.crt")
+mqttc.tls_set("ca.crt", tls_version=ssl.PROTOCOL_TLSv1_2)
 mqttc.connect("mosquitto.projects.sda.surfsara.nl", 50103, 60)
 
 mqttc.loop_forever()
